@@ -225,7 +225,7 @@ def generate_pdf(output_dir='.', doujinshi_obj=None, rm_origin_dir=False, move_t
             full_path_list = (
                 [os.path.join(doujinshi_dir, image) for image in file_list]
             )
-            pdf_f.write(img2pdf.convert(full_path_list))
+            pdf_f.write(img2pdf.convert(full_path_list, rotation=img2pdf.Rotation.ifvalid))
 
         if rm_origin_dir:
             shutil.rmtree(doujinshi_dir, ignore_errors=True)
@@ -252,7 +252,7 @@ def format_filename(s, length=MAX_FIELD_LENGTH, _truncate_only=False):
     It used to be a whitelist approach allowed only alphabet and a part of symbols.
     but most doujinshi's names include Japanese 2-byte characters and these was rejected.
     so it is using blacklist approach now.
-    if filename include forbidden characters (\'/:,;*?"<>|) ,it replace space character(' '). 
+    if filename include forbidden characters (\'/:,;*?"<>|) ,it replace space character(' ').
     """
     # maybe you can use `--format` to select a suitable filename
 
