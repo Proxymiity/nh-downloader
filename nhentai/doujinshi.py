@@ -82,15 +82,15 @@ class Doujinshi(object):
         # pdf or cbz file exists, skip re-download
         # doujinshi directory may not exist b/c of --rm-origin-dir option set.
         # user should pass --regenerate option to get back origin dir.
-        ret_pdf = ret_cbz = None
         if options.is_pdf:
             ret_pdf = os.path.exists(f'{base_path}.pdf') or os.path.exists(f'{base_path}/{self.filename}.pdf')
+            if ret_pdf:
+                return False
 
         if options.is_cbz:
             ret_cbz = os.path.exists(f'{base_path}.cbz') or os.path.exists(f'{base_path}/{self.filename}.cbz')
-
-        if all(filter(lambda s: s is not None, [ret_cbz, ret_pdf])):
-            return False
+            if ret_cbz:
+                return False
 
         # doujinshi directory doesn't exist, re-download
         if not (os.path.exists(base_path) and os.path.isdir(base_path)):
